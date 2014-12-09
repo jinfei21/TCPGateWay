@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_DIR" value="${APP_HOME}/logs"/>
+    <property name="LOG_FILE_NAME" value="tcp-gatekeeper.log"/>
+
+    <!-- Output to File and Rotate if it's necessary -->
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${LOG_FILE_NAME}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_DIR}/${LOG_FILE_NAME}.%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date [%-5thread] %-5level [%-10logger] %-10msg%n</pattern>
+        </encoder>
+        <filter class="com.ctriposs.tools.util.LogLevelFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <!--Output to central logging -->
+    <appender name="CentralLogging" class="com.ctrip.freeway.appender.CentralLoggingAppender">
+        <appId>921822</appId>
+        <serverIp>collector.logging.sh.ctriptravel.com</serverIp>
+        <serverPort>63100</serverPort>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="ROLLING"/>
+        <appender-ref ref="CentralLogging"/>
+    </root>
+</configuration>

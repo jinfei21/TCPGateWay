@@ -1,0 +1,4 @@
+com.ctrip.gateway/.classpath
+com.ctrip.gateway/.settings/org.eclipse.core.resources.prefs
+*.prefs
+*.project
