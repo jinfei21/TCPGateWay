@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 import com.netflix.config.DynamicPropertyFactory;
 import com.netflix.config.DynamicStringProperty;
 
-public class NettyServer {
+public class GateNettyServer {
 
-	private static final Logger logger = LoggerFactory.getLogger(NettyServer.class);
+	private static final Logger logger = LoggerFactory.getLogger(GateNettyServer.class);
 	
 	private final NioEventLoopGroup bossGroup;
 	private final NioEventLoopGroup workGroup;
@@ -23,7 +23,7 @@ public class NettyServer {
 	private DynamicStringProperty port = DynamicPropertyFactory.getInstance().getStringProperty("server.port", "8080");
 	
 	
-	private NettyServer(){
+	private GateNettyServer(){
 		this.bossGroup = new NioEventLoopGroup(1);
 		this.workGroup = new NioEventLoopGroup();
 	}

@@ -12,9 +12,9 @@ import com.ctrip.gateway.common.Constant;
 import com.netflix.config.DynamicIntProperty;
 import com.netflix.config.DynamicPropertyFactory;
 
-public class ServerInitializer extends ChannelInitializer<SocketChannel>{
+public class GateServerInitializer extends ChannelInitializer<SocketChannel>{
 
-	private static final Logger logger = LoggerFactory.getLogger(ServerInitializer.class);
+	private static final Logger logger = LoggerFactory.getLogger(GateServerInitializer.class);
 	
 	private DynamicIntProperty minRequestLen = DynamicPropertyFactory.getInstance().getIntProperty("request.minLen", 6);
 	private DynamicIntProperty maxRequestLen = DynamicPropertyFactory.getInstance().getIntProperty("request.maxLen", 1024 * 8);
@@ -23,11 +23,11 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel>{
 	private DynamicIntProperty idleTimeout = DynamicPropertyFactory.getInstance().getIntProperty("idle.timeout", 1000*60);
 	
 	private final GateMessageEncoder gateMessageEncoder;
-	private final ServerHandler serverHandler;
+	private final GateServerHandler serverHandler;
 	
-	public ServerInitializer(){
+	public GateServerInitializer(){
 		this.gateMessageEncoder = new GateMessageEncoder();
-		this.serverHandler = new ServerHandler();
+		this.serverHandler = new GateServerHandler();
 		Runnable callback = new Runnable(){
 
 			public void run() {
@@ -45,8 +45,9 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel>{
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ChannelPipeline pipeline = ch.pipeline();
 		pipeline.addLast(new IdleStateHandler(readTimeout.get(), writeTimeout.get(), idleTimeout.get()));
-		
-		
+		pipeline.addLast(new GateRequestDecoder());
+		pipeline.addLast(gateMessageEncoder);
+		pipeline.addLast(serverHandler);
 	}
 
 	
