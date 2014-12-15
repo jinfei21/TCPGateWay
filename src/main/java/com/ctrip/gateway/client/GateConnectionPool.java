@@ -1,6 +1,5 @@
 package com.ctrip.gateway.client;
 
-<<<<<<< HEAD
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -8,13 +7,11 @@ import java.util.Set;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-=======
->>>>>>> 05c8816060c3491e418b3245c6ccae3789a4e434
 public class GateConnectionPool {
 
 	private volatile int minCount;
 	private volatile int maxCount;
-<<<<<<< HEAD
+
 	private GateConnectionFactory connectFactory;
 	private Set<GateConnection> lease;
 	private LinkedList<GateConnection> free;
@@ -96,10 +93,5 @@ public class GateConnectionPool {
 		GateConnection connection = connectFactory.createConnection();
 		lease.add(connection);
 		return connection;
-=======
-	
-	public GateConnectionPool(){
-		
->>>>>>> 05c8816060c3491e418b3245c6ccae3789a4e434
 	}
 }

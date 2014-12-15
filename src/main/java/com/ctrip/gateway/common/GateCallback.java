@@ -19,11 +19,25 @@ public class GateCallback implements Callable{
 	
 	public Object call() throws Exception {
 		
-		
+        RequestContext.currentContext().unset();
+        RequestContext gateContext = RequestContext.currentContext();
+		try{
+			
+			service(request,response);
+			
+		}catch(Throwable t){
+			logger.warn("GateCallback execute error!", t);
+		}finally{
+			gateContext.unset();
+		}
 		
 		return null;
 	}
 	
+	
+	public void service(GateRequest request,GateResponse response){
+		
+	}
 	
 
 }
