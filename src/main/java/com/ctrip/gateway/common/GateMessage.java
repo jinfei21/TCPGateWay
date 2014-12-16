@@ -31,5 +31,14 @@ public class GateMessage {
 		buf.writeBytes(lenBytes);
 		buf.writeBytes(dataBytes);
 	}
+
+	public byte[] getLenBytes() {
+		return lenBytes;
+	}
+
+	public byte[] getDataBytes() {
+		return dataBytes;
+	}
+	
 	
 }
