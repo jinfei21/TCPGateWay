@@ -36,6 +36,10 @@ public class ShutDownHookManager {
 		
 	}
 	
+	public static ShutDownHookManager get(){
+		return MGR;
+	}
+	
 	private List<Runnable> getShutDownHookByPriority(){
 		List<HookEntry> list;
 		synchronized (MGR.hooks) {

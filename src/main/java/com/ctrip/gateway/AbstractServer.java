@@ -63,6 +63,21 @@ public abstract class AbstractServer {
     	logger.info("started the {}...", appName);
     }
     
+    public void close() {
+        logger.info("Stopping the  {} ...", appName);
+
+        try {
+            ApplicationInfoManager.getInstance().setInstanceStatus(InstanceInfo.InstanceStatus.DOWN);
+        } catch (Exception ignore) {}
+        DiscoveryManager.getInstance().shutdownComponent();
+
+        try {
+            doClose();
+        } catch (Exception e) {
+            logger.error("Error stopping httpServer ...", e);
+        }
+    }
+    
     private void configLog(){
     	logConfig = new LogConfig(appName,ConfigurationManager.getDeploymentContext().getDeploymentEnvironment());
     	logConfig.config();

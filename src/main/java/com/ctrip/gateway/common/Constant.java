@@ -15,6 +15,7 @@ public class Constant {
 	public static final String PREV_ROUTE_PATH = "com.ctrip.gateway.route.pre";
 	public static final String PROC_ROUTE_PATH = "com.ctrip.gateway.route.process";
 	public static final String POST_ROUTE_PATH = "com.ctrip.gateway.route.post";
+	public static final String FILTER_FRESH_INTERVAL = "gatefilter.fresh.interval.seconds";
 
 	public static final String PREV = "pre";
 	public static final String PROC = "proc";
