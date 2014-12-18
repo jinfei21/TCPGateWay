@@ -34,8 +34,6 @@ public class TCPGateWayServer extends AbstractServer {
         String pre_route = config.getString(PREV_ROUTE_PATH);
         String proc_route = config.getString(PROC_ROUTE_PATH);
         String post_route = config.getString(POST_ROUTE_PATH);
- 
-
    
 		GateFilterManage.instance().init(freshInterval.get(), pre_route,post_route,post_route);
 		this.gateServer = new GateNettyServer();

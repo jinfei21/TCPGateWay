@@ -37,6 +37,31 @@ public class GateCallback implements Callable{
 	
 	public void service(GateRequest request,GateResponse response){
 		
+        try {
+
+        	init(request, response);
+
+            try {
+                GateFilterProcess.instance().preRoute();
+                GateFilterProcess.instance().procRoute();
+            } catch (Exception e) {
+            	GateFilterProcess.instance().postRoute();
+                return;
+            }finally{
+            	GateFilterProcess.instance().postRoute();
+            }
+           
+
+        } catch (Throwable t) {
+          
+            logger.error("unhandle exception!", t);
+        }
+	}
+	
+	
+	private void init(GateRequest request,GateResponse response){
+		RequestContext.currentContext().setOriginRequest(request);
+		RequestContext.currentContext().setOriginResponse(response);
 	}
 	
 

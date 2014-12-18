@@ -42,13 +42,16 @@ public class DefaultGateClient implements GateClient {
         try{
             conn = (SocketGateConnection) pool.lease();
 
-
             sendRequest(request, conn);
             return receiveResponse(conn);
         }catch (Throwable t){
-            if (conn != null) {
-                conn.close();
-            }
+        	try{
+	            if (conn != null) {
+	                conn.close();
+	            }
+        	}finally{
+        		pool.releaseAndClose(conn);
+        	}
             throw new Exception(t);
         }finally {
             if (conn != null) {

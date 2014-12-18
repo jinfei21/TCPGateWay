@@ -71,6 +71,16 @@ public class GateConnectionPool {
 		}	
 	}
 	
+	public void releaseAndClose(GateConnection connection){
+		try{
+			lock.lock();
+			lease.remove(connection);		
+			condition.signalAll();
+		}finally{
+			lock.unlock();
+		}	
+	}
+	
 	public void close(){
 
 		while(lease.size() != 0){

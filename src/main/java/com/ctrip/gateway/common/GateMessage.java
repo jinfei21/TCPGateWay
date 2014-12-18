@@ -1,5 +1,8 @@
 package com.ctrip.gateway.common;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import io.netty.buffer.ByteBuf;
 
 public class GateMessage {
@@ -8,6 +11,8 @@ public class GateMessage {
 	private long createTime = System.currentTimeMillis();
 	private int len;
 	
+    private Map<String, Object> headers = new ConcurrentHashMap<String, Object>();
+    
 	public void setDataBytes(byte[] data){
 		this.dataBytes = data;
 	}
@@ -40,5 +45,20 @@ public class GateMessage {
 		return dataBytes;
 	}
 	
-	
+    public Object getHeader(String name) {
+        return headers.get(name);
+    }
+
+    public Object getHeader(String name, Object defaultValue) {
+        Object o = headers.get(name);
+        return o == null ? defaultValue : o;
+    }
+
+    public Object setHeader(String name, Object val) {
+        return headers.put(name, val);
+    }
+
+    public Map<String, Object> getHeaders() {
+        return headers;
+    }
 }

@@ -66,23 +66,24 @@ public class GateFilterManage {
 		instance.refreshInterval = refreshInterval;
 	}
 	
-	public List<GateFilter> getGateFilterByType(String type){
-	       List<GateFilter> list = filtersByType.get(type);
-	        if (list != null) return list;
+	public List<GateFilter> getGateFilterByType(String type) {
+		List<GateFilter> list = filtersByType.get(type);
+		if (list != null)
+			return list;
 
-	        list = new ArrayList<GateFilter>();
+		list = new ArrayList<GateFilter>();
 
-	        Collection<GateFilter> filterList = filters.values();
-	        for (Iterator<GateFilter> iterator = filterList.iterator(); iterator.hasNext(); ) {
-	            GateFilter filter = iterator.next();
-	            if (filter.filterType().equals(type)) {
-	                list.add(filter);
-	            }
-	        }
-	        Collections.sort(list); // sort by priority
+		Collection<GateFilter> filterList = filters.values();
+		for (Iterator<GateFilter> iterator = filterList.iterator(); iterator.hasNext();) {
+			GateFilter filter = iterator.next();
+			if (filter.filterType().equals(type)) {
+				list.add(filter);
+			}
+		}
+		Collections.sort(list); // sort by priority
 
-	         filtersByType.putIfAbsent(type, list);
-	        return list;
+		filtersByType.putIfAbsent(type, list);
+		return list;
 	}
 	
 	private void startFlush(){
